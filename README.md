@@ -25,3 +25,9 @@ The Spring Boot API and MySQL database must be hosted separately. Vercel's docum
 - Backend host: `DB_URL`, `DB_USER`, `DB_PASSWORD` = the hosted MySQL connection, and `FRONTEND_URL` = the deployed Vercel site origin, for example `https://your-project.vercel.app`.
 
 The default frontend API address (`http://localhost:8081`) is for local development only. After changing Vercel environment variables, create a new deployment so the Vite build includes the API URL.
+
+## Deploy the backend to Render
+
+The root `render.yaml` and `backend/Dockerfile` configure a Docker web service. In Render, create a Blueprint from this repository and deploy `smart-parking-api`, or create a Web Service manually with Runtime `Docker`, Dockerfile path `./backend/Dockerfile`, Docker context `.`, and health check path `/api/health`. Render assigns `PORT`; Spring Boot reads it and listens on `0.0.0.0`.
+
+Create a separate MySQL private service in Render first. Render's MySQL guide uses the `render-examples/mysql` template; configure its database name, user, and strong passwords and attach a persistent disk mounted at `/var/lib/mysql`. Keep the database and backend in the same region. Use the MySQL service's internal hostname in `DB_URL`, for example `jdbc:mysql://mysql-yourname:3306/smart_parking?createDatabaseIfNotExist=true`, and set `DB_USER` and `DB_PASSWORD` to the MySQL credentials. Set `FRONTEND_URL` to the exact deployed Vercel origin. The Blueprint leaves these four settings unsynced so secrets are entered in Render, not committed to Git.

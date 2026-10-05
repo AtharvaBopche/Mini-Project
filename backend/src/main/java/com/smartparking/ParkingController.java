@@ -17,6 +17,8 @@ public class ParkingController {
  private Map<String,Object> row(String sql,Object... args) { return db.queryForMap(sql,args); }
  private Map<String,Object> error(String message) { return Map.of("success",false,"message",message); }
 
+ @GetMapping("/health") public Map<String,Boolean> health() { return Map.of("success",true); }
+
  @PostMapping("/auth/register") public ResponseEntity<?> register(@RequestBody Map<String,Object> b) {
   String role=String.valueOf(b.getOrDefault("role","USER")).toUpperCase();
   if (!List.of("USER","ADMIN").contains(role) || !Objects.equals(b.get("password"),b.get("confirmPassword"))) return ResponseEntity.badRequest().body(error("Check account type and matching passwords"));
