@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = {"http://localhost:5173", "http://127.0.0.1:5173"})
+@CrossOrigin(origins = {"http://localhost:5173", "http://127.0.0.1:5173", "${FRONTEND_URL:http://localhost:5173}"})
 public class ParkingController {
  private final JdbcTemplate db;
  public ParkingController(JdbcTemplate db) { this.db=db; }

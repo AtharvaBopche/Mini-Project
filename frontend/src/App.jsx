@@ -1,5 +1,5 @@
 import React,{useEffect,useState}from'react';
-const API='http://localhost:8081/api';
+const API=`${(import.meta.env.VITE_API_URL||'http://localhost:8081').replace(/\/$/,'')}/api`;
 async function req(path,options={}){const r=await fetch(API+path,{headers:{'Content-Type':'application/json'},...options});const x=await r.json();if(!r.ok)throw Error(x.message||'Request failed');return x}
 function Card({title,value}){return <article className="panel metric"><span>{title}</span><strong>{value}</strong></article>}
 export default function App(){

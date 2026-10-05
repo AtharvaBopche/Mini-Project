@@ -14,3 +14,14 @@ React, JavaScript and CSS (Vite); Java 17, Spring Boot, Maven and JDBC; MySQL.
 The REST API is under `/api`. Basic routes include `/auth/register`, `/auth/login`, `/parking/locations`, `/vehicles`, `/bookings`, `/sessions/*` and `/admin/*`.
 
 This is a learning demo. Login/password handling is deliberately basic and must not be used as public production authentication.
+
+## Deploy the frontend to Vercel
+
+The repository root contains `vercel.json`. Import this repository into Vercel with the repository root (`.`) as the project root. Vercel installs the frontend dependencies, builds the Vite app and serves `frontend/dist`; the rewrite keeps the React app working on direct page visits.
+
+The Spring Boot API and MySQL database must be hosted separately. Vercel's documented function runtimes do not include Java, so this project does not deploy the Spring Boot server as a Vercel Function. Deploy the backend to a Java-capable host and connect it to a reachable MySQL database. Then set these environment variables:
+
+- Vercel: `VITE_API_URL` = the backend base URL, for example `https://your-api.example.com` (do not add `/api`).
+- Backend host: `DB_URL`, `DB_USER`, `DB_PASSWORD` = the hosted MySQL connection, and `FRONTEND_URL` = the deployed Vercel site origin, for example `https://your-project.vercel.app`.
+
+The default frontend API address (`http://localhost:8081`) is for local development only. After changing Vercel environment variables, create a new deployment so the Vite build includes the API URL.
