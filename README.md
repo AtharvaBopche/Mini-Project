@@ -7,11 +7,22 @@ React, JavaScript and CSS (Vite); Java 17, Spring Boot, Maven and JDBC; MySQL.
 
 ## Run
 1. Install Java 17+, Maven, Node.js and MySQL.
-2. The project is configured for a dedicated local MySQL instance on port 3307, separate from any MySQL server already installed on the computer. If you use another server, set `DB_URL`, `DB_USER` and `DB_PASSWORD` before starting Spring Boot.
-3. In `backend`, run `mvn spring-boot:run`.
+2. The default local MySQL address is port 3307. If you use another server, set `DB_URL`, `DB_USER` and `DB_PASSWORD` before starting Spring Boot.
+3. In `backend`, start Spring Boot with the `local` profile to load the demo database: `$env:SPRING_PROFILES_ACTIVE='local'; mvn spring-boot:run`.
 4. In `frontend`, run `npm install` and `npm run dev`; open the Vite URL.
 
 The REST API is under `/api`. Basic routes include `/auth/register`, `/auth/login`, `/parking/locations`, `/vehicles`, `/bookings`, `/sessions/*` and `/admin/*`.
+
+### Demo accounts
+
+The backend inserts these demo accounts when it starts with the `local` profile (existing accounts with these emails are left unchanged):
+
+| Role | Email | Password |
+| --- | --- | --- |
+| User | `demo.user@example.com` | `user123` |
+| Provider | `demo.provider@example.com` | `provider123` |
+
+The local seed also adds a demo vehicle, a parking location, and four available slots. These accounts are for local learning and demonstration only. Do not use them for a public deployment.
 
 This is a learning demo. Login/password handling is deliberately basic and must not be used as public production authentication.
 
